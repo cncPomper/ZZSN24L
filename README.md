@@ -17,6 +17,7 @@
     * `streaming_responder.py`
     * `simple_custom_responder.py`
     * `actual_llm_responder.py` (this use uses models from hf, so getting them may take some time, depending on your internet connection)
+    * `multimodal_but_stupid_responder.py`
 
 ## Dane
 Datasety są opisane w [data](./data/).
