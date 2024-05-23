@@ -3,6 +3,7 @@
 ## TODO
 - [x] wstępna działająca wersja chatbota
 - [ ] wersja, która mówi z sensem
+- [ ] dodać element *RAG-like*, żeby czathob rozmawiał w odniesieniu do danych
 - [ ] dokumentacja projektu
 
 ## Setup
@@ -17,6 +18,9 @@
     * `simple_custom_responder.py`
     * `actual_llm_responder.py` (this use uses models from hf, so getting them may take some time, depending on your internet connection)
 
+## Dane
+Datasety są opisane w [data](./data/).
+
 ## Wyniki
 * halucynacje mocno so far 
 ![part-0](./assets/results-0.png)
@@ -28,3 +32,4 @@
 * [gradio docs customization](https://www.gradio.app/guides/creating-a-custom-chatbot-with-blocks)
 * [gradio docs tutorial multimodal](https://www.gradio.app/guides/multimodal-chatbot-part1)
 * [medium](https://medium.com/@anu.surabhi1980/building-a-simple-chatbot-with-transformers-and-gradio-c7913c21217f)
+* [yt tutorial on multimodal chatbot](https://www.youtube.com/watch?v=IVJkOHTBPn0&ab_channel=HuggingFace)
