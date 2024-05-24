@@ -6,9 +6,15 @@
 - [ ] wybór / testy LLM
     - [ ] llama2
     - [ ] mistral
+    - [ ] turing (from huggingface)
     - [ ] któryś z polskich
 - [ ] wersja, która mówi z sensem
 - [ ] dodać element *RAG-like*, żeby czathob rozmawiał w odniesieniu do danych
+- [ ] dodanie *vector DB* (jeżeli potrzebne)
+    - [ ] milvus
+    - [ ] faiss
+    - [ ] chroma
+    - [ ] weaviate
 - [ ] dokumentacja projektu
 
 ## Setup
@@ -25,9 +31,41 @@
     * `multimodal_but_stupid_responder.py`
 
 ## Development
+
+### Gradio
 * na podstawie tutoriala z yt
     - GradioModel - data model, danych, które będą przesyłane do chatbota
     - CustomComponents - pisanie własnych komponentów
+
+### LangChain
+* możliwość ustawienia 'loaderów' do wczytywania różnych modalności
+    - `CSVLoader` - wczytuje plik csv
+    - `PyPDFLoader` - wczytuje plik pdf
+    - `WebBaseLoader` - wczytuje stronę www, np. tak:
+```python
+from langchain.document_loaders import WebBaseLoader
+
+loader = WebBaseLoader("https://github.com/basecamp/handbook/blob/master/37signals-is-you.md")
+
+docs = loader.load()
+print(docs[0].page_content[:500])
+```
+    - `GenericLoader` - dowolnie, można użyć np. tak:
+```python
+from langchain.document_loaders.generic import GenericLoader
+from langchain.document_loaders.parsers import OpenAIWhisperParser
+from langchain.document_loaders.blob_loaders.youtube_audio import YoutubeAudioLoader
+
+url="https://www.youtube.com/watch?v=jGwO_UgTS7I"
+save_dir="docs/youtube/"
+loader = GenericLoader(
+    YoutubeAudioLoader([url],save_dir),
+    OpenAIWhisperParser()
+)
+docs = loader.load()
+docs[0].page_content[0:500]
+```
+* możliwość pracy 'w trybie' QA (*question answering*)
 
 ## Dane
 Datasety są opisane w [data](./data/).
@@ -46,3 +84,6 @@ Datasety są opisane w [data](./data/).
 * [yt tutorial on multimodal chatbot](https://www.youtube.com/watch?v=IVJkOHTBPn0&ab_channel=HuggingFace)
 * [llm file input some blogpost](https://shelf.io/blog/understanding-the-influence-of-llm-inputs-on-outputs/)
 * [llm file input medium langchain](https://medium.com/@hamzafergougui/speak-to-your-data-using-langchain-and-llms-78afb42d4c36)
+* [langchain example medium](https://medium.com/@weidagang/hello-llm-building-a-local-chatbot-with-langchain-and-llama2-3a4449fc4c03)
+* [RAG example medium](https://medium.com/@iankelk/rag-detective-retrieval-augmented-generation-with-website-data-5a748b063040)
+* [harvard AC215 CSCIE-115](https://harvard-iacs.github.io/2023-AC215/)
