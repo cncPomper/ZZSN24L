@@ -8,6 +8,8 @@
     - [ ] mistral
     - [ ] turing (from huggingface)
     - [ ] któryś z polskich
+- [ ] wybór / testy innych *trick*'ów
+    - [ ] system prompt
 - [ ] wersja, która mówi z sensem
 - [ ] dodać element *RAG-like*, żeby czathob rozmawiał w odniesieniu do danych
 - [ ] dodanie *vector DB* (jeżeli potrzebne)
