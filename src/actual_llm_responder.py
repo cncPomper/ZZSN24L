@@ -1,11 +1,37 @@
 import gradio as gr
 import torch
+import transformers
 from transformers import AutoModelForCausalLM, AutoTokenizer, StoppingCriteria, StoppingCriteriaList, TextIteratorStreamer
 from threading import Thread
 
+# tokenizers = [
+#     AutoTokenizer.from_pretrained("togethercomputer/RedPajama-INCITE-Chat-3B-v1"),
+#     AutoTokenizer.from_pretrained("microsoft/DialoGPT-medium"),
+#     AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-1.3B"),
+# ]
+
+# models = [
+#     AutoModelForCausalLM.from_pretrained("togethercomputer/RedPajama-INCITE-Chat-3B-v1", torch_dtype=torch.float16),
+#     AutoModelForCausalLM.from_pretrained("microsoft/DialoGPT-medium"),
+#     AutoModelForCausalLM.from_pretrained("EleutherAI/gpt-neo-1.3B"),
+# ]
+
+# TODO: other models, like:
+# https://huggingface.co/microsoft/Phi-3-vision-128k-instruct
+# https://huggingface.co/mistralai/Codestral-22B-v0.1
+# https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct
+# https://huggingface.co/docs/transformers/model_doc/llama3
+
 tokenizer = AutoTokenizer.from_pretrained("togethercomputer/RedPajama-INCITE-Chat-3B-v1")
 model = AutoModelForCausalLM.from_pretrained("togethercomputer/RedPajama-INCITE-Chat-3B-v1", torch_dtype=torch.float16)
+
 model = model.to('cuda:0')
+
+# model_id = "meta-llama/Meta-Llama-3-8B"
+
+# pipeline = transformers.pipeline(
+#     "text-generation", model=model_id, model_kwargs={"torch_dtype": torch.bfloat16}, device_map="auto"
+# )
 
 class StopOnTokens(StoppingCriteria):
     def __call__(self, input_ids: torch.LongTensor, scores: torch.FloatTensor, **kwargs) -> bool:
