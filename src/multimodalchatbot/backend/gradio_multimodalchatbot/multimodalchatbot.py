@@ -39,9 +39,11 @@ class MultiModalChatbot(Component):
 
     def __init__(
         self,
-        value: list[list[str | tuple[str] | tuple[str | Path, str] | None]]
-        | Callable
-        | None = None,
+        value: (
+            list[list[str | tuple[str] | tuple[str | Path, str] | None]]
+            | Callable
+            | None
+        ) = None,
         *,
         label: str | None = None,
         every: float | None = None,
@@ -150,7 +152,9 @@ class MultiModalChatbot(Component):
         elif isinstance(chat_message, str):
             return chat_message
         else:
-            raise ValueError(f"Invalid message for MultiModalChatbot component: {chat_message}")
+            raise ValueError(
+                f"Invalid message for MultiModalChatbot component: {chat_message}"
+            )
 
     def preprocess(
         self,
@@ -199,7 +203,9 @@ class MultiModalChatbot(Component):
             chat_message = inspect.cleandoc(chat_message)
             return chat_message
         else:
-            raise ValueError(f"Invalid message for MultiModalChatbot component: {chat_message}")
+            raise ValueError(
+                f"Invalid message for MultiModalChatbot component: {chat_message}"
+            )
 
     def postprocess(
         self,

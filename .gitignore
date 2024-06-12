@@ -4,6 +4,10 @@ data/netflix_reviews
 
 # Drafts
 src/DRAFT.ipynb
+DRAFT.ipynb
+
+# Models
+models/
 
 # Gradio
 gradio_cached_examples/

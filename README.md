@@ -20,6 +20,8 @@
 - [ ] dokumentacja projektu
 
 ## Setup
+# `pip install ctransformers[cuda]>=0.2.24`
+* `pip install llama-cpp-python --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu122`
 * `pip install -r requirements.txt`
 * run bunch of chatbots or 'chatbots' from gradio docs: 
     1. `python src/{bot_name}.py`

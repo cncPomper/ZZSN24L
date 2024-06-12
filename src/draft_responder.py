@@ -7,11 +7,11 @@ def chat(user_input, chat_history):
         chat_history = []
     conversation = Conversation(user_input)
     for message in chat_history:
-        conversation.add_user_input(message['user'])
-        conversation.add_bot_response(message['bot'])
+        conversation.add_user_input(message["user"])
+        conversation.add_bot_response(message["bot"])
     response = chatbot(conversation)
     bot_response = response.generated_responses[-1]
-    chat_history.append({'user': user_input, 'bot': bot_response})
+    chat_history.append({"user": user_input, "bot": bot_response})
     return bot_response, chat_history
 
 
