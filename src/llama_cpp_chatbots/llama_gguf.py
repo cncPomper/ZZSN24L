@@ -42,7 +42,8 @@ def main():
         responses_df.loc[-1] = [model_filename, prompt, response]
         responses_df.index = responses_df.index + 1
         responses_df = responses_df.sort_index()
-        responses_df.to_json("llama-2-chat-gguf-responses.json", orient="index")   
+        
+    responses_df.to_json("llama-2-chat-gguf-responses.json", orient="index")
 
 if __name__ == "__main__":
     main()

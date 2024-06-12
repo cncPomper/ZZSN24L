@@ -1,7 +1,8 @@
+import json
 from llama_cpp import Llama
 
 llm = Llama(
-    model_path="./models/7B/llama-model.gguf",
+    model_path="./models/llama-2-7b.Q4_K_M.gguf",
     # n_gpu_layers=-1, # Uncomment to use GPU acceleration
     # seed=1337, # Uncomment to set a specific seed
     # n_ctx=2048, # Uncomment to increase the context window
@@ -15,4 +16,6 @@ output = llm(
     ],  # Stop generating just before the model would generate a new question
     echo=True,  # Echo the prompt back in the output
 )  # Generate a completion, can also call create_completion
-print(output)
+
+print(output.keys())
+json.dump(output, open("llama-cpp-planets-output.json", "w"), indent=4)

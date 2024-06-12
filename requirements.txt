@@ -1,2 +1,5 @@
 transformers
 gradio
+pypdf
+sentence-transformers
+chromadb

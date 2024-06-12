@@ -1,0 +1,19 @@
+{
+    "id": "cmpl-b372ea76-2118-4405-a5d4-047ec03ac722",
+    "object": "text_completion",
+    "created": 1718195878,
+    "model": "./models/llama-2-7b.Q4_K_M.gguf",
+    "choices": [
+        {
+            "text": "Q: Name the planets in the solar system? A: 8. Unterscheidung der Planeten und Kometen (English Edition) eBook: Koeppl, Hans, Mundt, Klaus: : Kind",
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "length"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 15,
+        "completion_tokens": 32,
+        "total_tokens": 47
+    }
+}
