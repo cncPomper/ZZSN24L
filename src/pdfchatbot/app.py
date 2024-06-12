@@ -1,5 +1,6 @@
 from interface import create_demo
-from pdfchatbot import PDFChatBot
+# from pdfchatbot import PDFChatBot
+from pdfchatbot_generated import PDFChatBot
 
 # Create Gradio interface
 demo, chat_history, show_img, txt, submit_button, uploaded_pdf = create_demo()

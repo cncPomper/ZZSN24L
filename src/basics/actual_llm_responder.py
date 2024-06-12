@@ -29,10 +29,12 @@ from threading import Thread
 # https://huggingface.co/docs/transformers/model_doc/llama3
 
 tokenizer = AutoTokenizer.from_pretrained(
-    "togethercomputer/RedPajama-INCITE-Chat-3B-v1"
+    # "togethercomputer/RedPajama-INCITE-Chat-3B-v1"
+    "meta-llama/Llama-2-7b-chat-hf"
 )
 model = AutoModelForCausalLM.from_pretrained(
-    "togethercomputer/RedPajama-INCITE-Chat-3B-v1", torch_dtype=torch.float16
+    # "togethercomputer/RedPajama-INCITE-Chat-3B-v1", torch_dtype=torch.float16
+    "meta-llama/Llama-2-7b-chat-hf"
 )
 
 model = model.to("cuda:0")

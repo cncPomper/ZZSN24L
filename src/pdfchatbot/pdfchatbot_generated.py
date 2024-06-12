@@ -1,17 +1,14 @@
 import yaml
-# import fitz
 import torch
 import gradio as gr
 from PIL import Image
 from langchain_community.embeddings import LlamaCppEmbeddings
-from langchain.vectorstores import Chroma
-from langchain.llms import HuggingFacePipeline
+from langchain_community.vectorstores import Chroma
+from langchain_community.llms import HuggingFacePipeline
 from langchain.chains import ConversationalRetrievalChain
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.prompts import PromptTemplate
-# from ctransformers import AutoModelForCausalLM, AutoTokenizer
-from transformers import pipeline, AutoModelForCausalLM
-from ctransformers import AutoTokenizer
+from transformers import pipeline, AutoModelForCausalLM, AutoTokenizer
 
 class PDFChatBot:
     def __init__(self):
@@ -29,7 +26,6 @@ class PDFChatBot:
         self.model = None
         self.pipeline = None
         self.chain = None
-
 
     def add_text(self, history, text):
         """
@@ -52,7 +48,7 @@ class PDFChatBot:
         Create a prompt template for the chatbot.
         """
         template = (
-            f"The assistant should provide detailed explanations."
+            "The assistant should provide detailed explanations."
             "Combine the chat history and follow up question into "
             "Follow up question: What is this"
         )
@@ -63,8 +59,8 @@ class PDFChatBot:
         Load embeddings from Hugging Face and set in the config file.
         """
         self.embeddings = LlamaCppEmbeddings(
-            model_path=r"D:\__repos\ZZSN24L\models\Llama-2-7B-GGUF\llama-2-7b.Q3_K_M.gguf",
-            )
+            model_path=r"D:\__repos\ZZSN24L\models\Llama-2-7B-GGUF\llama-2-7b.Q3_K_M.gguf"
+        )
 
     def load_vectordb(self):
         """
@@ -77,13 +73,8 @@ class PDFChatBot:
         Load the tokenizer from Hugging Face and set in the config file.
         """
         self.tokenizer = AutoTokenizer.from_pretrained(
-            # pretrained_model_name_or_path="TheBloke/Llama-2-7B-GGUF",
-            # "./models/Llama-2-7B-GGUF/llama-2-7b.Q4_K_M.gguf",
-            # "./models/Llama-2-7B-GGUF",
-            # "./models/Llama-2-7B-GGUF",
-            # model_file="llama-2-7b.Q4_K_M.gguf"
-            self.model
-            )
+            "TheBloke/Llama-2-7B-GGUF"
+        )
 
     def load_model(self):
         """
@@ -91,13 +82,7 @@ class PDFChatBot:
         """
         self.model = AutoModelForCausalLM.from_pretrained(
             "TheBloke/Llama-2-7B-GGUF",
-            model_file="llama-2-7b.Q4_K_M.gguf",
-            hf = True
-            # "TheBloke/Llama-2-7B-GGUF/llama-2-7b.Q4_K_M.gguf",
-            # device_map='auto',
-            # torch_dtype=torch.float32,
-            # token=True,
-            # load_in_8bit=False
+            model_file="llama-2-7b.Q4_K_M.gguf"
         )
 
     def create_pipeline(self):
@@ -105,8 +90,8 @@ class PDFChatBot:
         Create a pipeline for text generation using the loaded model and tokenizer.
         """
         pipe = pipeline(
-            model=self.model,
             task='text-generation',
+            model=self.model,
             tokenizer=self.tokenizer,
             max_new_tokens=200
         )
@@ -167,3 +152,22 @@ class PDFChatBot:
         for char in result['answer']:
             history[-1][-1] += char
         return history, " "
+
+    
+    def render_file(self, file):
+        """
+        Renders a specific page of a PDF file as an image.
+
+        Parameters:
+            file (FileStorage): The PDF file.
+
+        Returns:
+            PIL.Image.Image: The rendered page as an image.
+        """
+        # doc = fitz.open(file.name)
+        # page = doc[self.page]
+        # pix = page.get_pixmap(matrix=fitz.Matrix(300 / 72, 300 / 72))
+        # image = Image.frombytes('RGB', [pix.width, pix.height], pix.samples)
+        # return image
+        # pass
+        
