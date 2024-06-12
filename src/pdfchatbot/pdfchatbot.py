@@ -9,8 +9,8 @@ from langchain.llms import HuggingFacePipeline
 from langchain.chains import ConversationalRetrievalChain
 from langchain.document_loaders import PyPDFLoader
 from langchain.prompts import PromptTemplate
-from ctransformers import AutoModelForCausalLM, AutoTokenizer
-from transformers import pipeline
+# from ctransformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import pipeline, AutoModelForCausalLM, AutoTokenizer
 
 class PDFChatBot:
     def __init__(self, config_path="src/pdfchatbot/config.yaml"):
@@ -98,9 +98,10 @@ class PDFChatBot:
         """
         self.tokenizer = AutoTokenizer.from_pretrained(
             "TheBloke/Llama-2-7B-GGUF",
+            # "./models/Llama-2-7B-GGUF/llama-2-7b.Q4_K_M.gguf",
             # "./models/Llama-2-7B-GGUF",
             # "./models/Llama-2-7B-GGUF",
-            # model_file="llama-2-7b.Q4_K_M.gguf"
+            model_file="llama-2-7b.Q4_K_M.gguf"
             )
 
     def load_model(self):
@@ -108,8 +109,9 @@ class PDFChatBot:
         Load the causal language model from Hugging Face and set in the config file.
         """
         self.model = AutoModelForCausalLM.from_pretrained(
-            "TheBloke/Llama-2-7B-GGUF/llama-2-7b.Q4_K_M.gguf",
-            # model_file="llama-2-7b.Q4_K_M.gguf",
+            "TheBloke/Llama-2-7B-GGUF",
+            model_file="llama-2-7b.Q4_K_M.gguf",
+            # "TheBloke/Llama-2-7B-GGUF/llama-2-7b.Q4_K_M.gguf",
             # device_map='auto',
             # torch_dtype=torch.float32,
             # token=True,
@@ -149,8 +151,8 @@ class PDFChatBot:
         """
         self.create_prompt_template()
         self.documents = PyPDFLoader(file.name).load()
-        self.load_embeddings()
-        self.load_vectordb()
+        # self.load_embeddings()
+        # self.load_vectordb()
         self.load_tokenizer()
         self.load_model()
         self.create_pipeline()
