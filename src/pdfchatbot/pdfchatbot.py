@@ -3,13 +3,14 @@ import yaml
 import torch
 import gradio as gr
 from PIL import Image
-from langchain.embeddings import HuggingFaceEmbeddings
+from langchain.embeddings import LlamaCppEmbeddings
 from langchain.vectorstores import Chroma
 from langchain.llms import HuggingFacePipeline
 from langchain.chains import ConversationalRetrievalChain
 from langchain.document_loaders import PyPDFLoader
 from langchain.prompts import PromptTemplate
-from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
+from ctransformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import pipeline
 
 class PDFChatBot:
     def __init__(self, config_path="src/pdfchatbot/config.yaml"):
@@ -81,8 +82,8 @@ class PDFChatBot:
         """
         Load embeddings from Hugging Face and set in the config file.
         """
-        self.embeddings = HuggingFaceEmbeddings(
-            model_name=self.config.get("modelEmbeddings")
+        self.embeddings = LlamaCppEmbeddings(
+            model_path=r"D:\__repos\ZZSN24L\models\Llama-2-7B-GGUF\llama-2-7b.Q3_K_M.gguf",
             )
 
     def load_vectordb(self):
@@ -96,8 +97,10 @@ class PDFChatBot:
         Load the tokenizer from Hugging Face and set in the config file.
         """
         self.tokenizer = AutoTokenizer.from_pretrained(
-            "./models/Llama-2-7B-GGUF",
-            model_file="llama-2-7b.Q3_K_M.gguf"
+            "TheBloke/Llama-2-7B-GGUF",
+            # "./models/Llama-2-7B-GGUF",
+            # "./models/Llama-2-7B-GGUF",
+            # model_file="llama-2-7b.Q4_K_M.gguf"
             )
 
     def load_model(self):
@@ -105,12 +108,12 @@ class PDFChatBot:
         Load the causal language model from Hugging Face and set in the config file.
         """
         self.model = AutoModelForCausalLM.from_pretrained(
-            "TheBloke/Llama-2-7B-GGUF",
-            model_file="llama-2-7b.Q4_K_M.gguf",
-            device_map='auto',
-            torch_dtype=torch.float32,
-            token=True,
-            load_in_8bit=False
+            "TheBloke/Llama-2-7B-GGUF/llama-2-7b.Q4_K_M.gguf",
+            # model_file="llama-2-7b.Q4_K_M.gguf",
+            # device_map='auto',
+            # torch_dtype=torch.float32,
+            # token=True,
+            # load_in_8bit=False
         )
 
     def create_pipeline(self):
