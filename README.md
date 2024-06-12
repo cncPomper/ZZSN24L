@@ -74,6 +74,9 @@ docs[0].page_content[0:500]
 ## Dane
 Datasety są opisane w [data](./data/).
 
+## Problemy
+* modele z GGUF nie mogą być bezpośrednio załadowane z hf [źródło](https://huggingface.co/TheBloke/LLaMa-7B-GGML/discussions/2)
+
 ## Wyniki
 * halucynacje mocno so far 
 ![part-0](./assets/results-0.png)
