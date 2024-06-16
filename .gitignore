@@ -1,7 +1,7 @@
 # Data
 data/chatgpt_reviews
 data/netflix_reviews
-*.pdf
+inputs/*.pdf
 
 # Drafts
 src/DRAFT.ipynb
