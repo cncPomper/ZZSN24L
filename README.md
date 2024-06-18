@@ -94,3 +94,4 @@ Datasety są opisane w [data](./data/).
 * [langchain example medium](https://medium.com/@weidagang/hello-llm-building-a-local-chatbot-with-langchain-and-llama2-3a4449fc4c03)
 * [RAG example medium](https://medium.com/@iankelk/rag-detective-retrieval-augmented-generation-with-website-data-5a748b063040)
 * [harvard AC215 CSCIE-115](https://harvard-iacs.github.io/2023-AC215/)
+* [do we live in a simulation](https://www.scientificamerican.com/article/confirmed-we-live-in-a-simulation/)

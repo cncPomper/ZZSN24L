@@ -1,3 +1,4 @@
+from langchain_core.prompts import PromptTemplate
 import torch
 import pandas as pd
 import transformers
@@ -16,26 +17,51 @@ def extract_text_from_pdf(pdf_path):
     return text
 
 def main():
-    # check transformers version
+    
     assert transformers.__version__ >= MIN_TRANSFORMERS_VERSION, f'Please upgrade transformers to version {MIN_TRANSFORMERS_VERSION} or higher.'
 
-    responses_df = pd.DataFrame(columns=["Prompt", "Response"])
-
-    # Extract prompts from PDF
-    pdf_path = r'inputs\nike-report.pdf'  # Update with your PDF path
-    prompts_text = extract_text_from_pdf(pdf_path)
-    prompts_list = prompts_text.split('\n\n')  # Assuming prompts are separated by double newlines
+    # Extract data from PDF
+    pdf_path = r'inputs\simulation.pdf'  # Update with your PDF path
+    pdf_data = extract_text_from_pdf(pdf_path)
 
     # init
-    tokenizer = AutoTokenizer.from_pretrained("togethercomputer/RedPajama-INCITE-Chat-3B-v1")
-    model = AutoModelForCausalLM.from_pretrained("togethercomputer/RedPajama-INCITE-Chat-3B-v1", torch_dtype=torch.float16)
+    responses_df = pd.DataFrame(columns=["Prompt", "Response"])
+    # tokenizer = AutoTokenizer.from_pretrained("togethercomputer/RedPajama-INCITE-Chat-3B-v1")
+    tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-hf")
+    # model = AutoModelForCausalLM.from_pretrained("togethercomputer/RedPajama-INCITE-Chat-3B-v1", torch_dtype=torch.float16)
+    model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-2-7b-hf", torch_dtype=torch.float16)
     model = model.to('cuda:0')
+
+    prompts_list = [
+        "What is the meaning of life?",
+        "What is the best programming language?",
+        "Are humans good or bad?",
+        "What is the best movie of all time?",
+        "What if there is no God?",
+        "Is science good?",
+        "What is the best book ever written?",
+        "Do animals have feelings?",
+        "What is the nature of reality?",
+        "What is the nature of consciousness?",
+        "Do we live in a simulation?",
+    ]
+    print("len prompts list", len(prompts_list))
+
+ 
+    template = PromptTemplate.from_template(
+        "You are a helpful AI assistant. Write response to prompt: '{prompt}'. If you don't know, do not make up facts. If needed, use data from {pdf_data}")
     
     # infer
     for prompt in prompts_list:
         try:
-            inputs = tokenizer(prompt, return_tensors='pt').to(model.device)
+            # manual limit for now
+            # pdf_data = pdf_data[:1000]  # Limiting the data to 1000 characters
+
+            prepared_prompt = template.format(pdf_data=pdf_data, prompt=prompt)
+
+            inputs = tokenizer(prepared_prompt, return_tensors='pt').to(model.device)
             input_length = inputs.input_ids.shape[1]
+            print('input_length:', input_length)
             outputs = model.generate(
                 **inputs, max_new_tokens=128, do_sample=True, temperature=0.7, top_p=0.7, top_k=50, return_dict_in_generate=True
             )
@@ -49,7 +75,7 @@ def main():
         responses_df.index = responses_df.index + 1
         responses_df = responses_df.sort_index()
         
-    responses_df.to_json("red-pajama-3B-responses.json", orient="index")
+    responses_df.to_json("llama-2-7b-responses.json", orient="index")
 
 
 if __name__ == "__main__":
