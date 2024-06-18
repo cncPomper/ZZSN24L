@@ -3,3 +3,6 @@ gradio
 pypdf
 sentence-transformers
 chromadb
+unidecode
+black 
+accelerate

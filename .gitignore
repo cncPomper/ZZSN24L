@@ -6,6 +6,7 @@ inputs/*.pdf
 # Drafts
 src/DRAFT.ipynb
 DRAFT.ipynb
+debug.txt
 
 # Models
 models/

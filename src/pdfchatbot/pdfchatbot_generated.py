@@ -10,6 +10,7 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain.prompts import PromptTemplate
 from transformers import pipeline, AutoModelForCausalLM, AutoTokenizer
 
+
 class PDFChatBot:
     def __init__(self):
         """
@@ -39,8 +40,8 @@ class PDFChatBot:
             list: Updated chat history.
         """
         if not text:
-            raise gr.Error('Enter text')
-        history.append((text, ''))
+            raise gr.Error("Enter text")
+        history.append((text, ""))
         return history
 
     def create_prompt_template(self):
@@ -72,17 +73,14 @@ class PDFChatBot:
         """
         Load the tokenizer from Hugging Face and set in the config file.
         """
-        self.tokenizer = AutoTokenizer.from_pretrained(
-            "TheBloke/Llama-2-7B-GGUF"
-        )
+        self.tokenizer = AutoTokenizer.from_pretrained("TheBloke/Llama-2-7B-GGUF")
 
     def load_model(self):
         """
         Load the causal language model from Hugging Face and set in the config file.
         """
         self.model = AutoModelForCausalLM.from_pretrained(
-            "TheBloke/Llama-2-7B-GGUF",
-            model_file="llama-2-7b.Q4_K_M.gguf"
+            "TheBloke/Llama-2-7B-GGUF", model_file="llama-2-7b.Q4_K_M.gguf"
         )
 
     def create_pipeline(self):
@@ -90,10 +88,10 @@ class PDFChatBot:
         Create a pipeline for text generation using the loaded model and tokenizer.
         """
         pipe = pipeline(
-            task='text-generation',
+            task="text-generation",
             model=self.model,
             tokenizer=self.tokenizer,
-            max_new_tokens=200
+            max_new_tokens=200,
         )
         self.pipeline = HuggingFacePipeline(pipeline=pipe)
 
@@ -106,7 +104,7 @@ class PDFChatBot:
             chain_type="stuff",
             retriever=self.vectordb.as_retriever(search_kwargs={"k": 1}),
             condense_question_prompt=self.prompt,
-            return_source_documents=True
+            return_source_documents=True,
         )
 
     def process_file(self, file):
@@ -138,22 +136,24 @@ class PDFChatBot:
             tuple: Updated chat history and a space.
         """
         if not query:
-            raise gr.Error(message='Submit a question')
+            raise gr.Error(message="Submit a question")
         if not file:
-            raise gr.Error(message='Upload a PDF')
+            raise gr.Error(message="Upload a PDF")
         if not self.processed:
             self.process_file(file)
             self.processed = True
 
-        result = self.chain({"question": query, 'chat_history': self.chat_history}, return_only_outputs=True)
+        result = self.chain(
+            {"question": query, "chat_history": self.chat_history},
+            return_only_outputs=True,
+        )
         self.chat_history.append((query, result["answer"]))
-        self.page = list(result['source_documents'][0])[1][1]['page']
+        self.page = list(result["source_documents"][0])[1][1]["page"]
 
-        for char in result['answer']:
+        for char in result["answer"]:
             history[-1][-1] += char
         return history, " "
 
-    
     def render_file(self, file):
         """
         Renders a specific page of a PDF file as an image.
@@ -170,4 +170,3 @@ class PDFChatBot:
         # image = Image.frombytes('RGB', [pix.width, pix.height], pix.samples)
         # return image
         # pass
-        
