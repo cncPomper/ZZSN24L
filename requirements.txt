@@ -1,3 +1,4 @@
+# torch   # for torch installation follow: https://pytorch.org/get-started/locally/
 transformers
 gradio
 pypdf
@@ -6,3 +7,5 @@ chromadb
 unidecode
 black 
 accelerate
+unidecode
+tqdm
