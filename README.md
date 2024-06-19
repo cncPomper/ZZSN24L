@@ -82,6 +82,16 @@ Datasety są opisane w [data](./data/).
 ![part-0](./assets/results-0.png)
 ![part-1](./assets/results-1.png)
 
+* llama 2 + gradio + RAG
+![part-0](./assets/llama-0.png)
+
+* red pajama + gradio + RAG
+![part-0](./assets/red-pajama-0.png)
+![part-1](./assets/red-pajama-1.png)
+
+* GPT-4o
+![part-0](./assets/gpt-4o.png)
+
 ## Źródła
 * [gradio docs general](https://www.gradio.app/docs/gradio/chatbot)
 * [gradio docs fast](https://www.gradio.app/guides/creating-a-chatbot-fast)

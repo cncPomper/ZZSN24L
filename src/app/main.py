@@ -32,7 +32,6 @@ def demo():
                     interactive=True,
                     label="Upload your PDF documents (single or multiple)",
                 )
-                # upload_btn = gr.UploadButton("Loading document...", height=100, file_count="multiple", file_types=["pdf"], scale=1)
 
         with gr.Tab("Step 2 - Process document"):
             with gr.Row():
@@ -144,7 +143,6 @@ def demo():
                 clear_btn = gr.ClearButton([msg, chatbot], value="Clear conversation")
 
         # Preprocessing events
-        # upload_btn.upload(upload_file, inputs=[upload_btn], outputs=[document])
         db_btn.click(
             initialize_database,
             inputs=[document, slider_chunk_size, slider_chunk_overlap],
