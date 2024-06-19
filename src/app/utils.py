@@ -48,14 +48,18 @@ def create_db(splits, collection_name: str) -> Chroma:
 def load_db() -> Chroma:
     embedding = HuggingFaceEmbeddings()
     vectordb = Chroma(
-        persist_directory=default_persist_directory,
-        embedding_function=embedding
+        persist_directory=default_persist_directory, embedding_function=embedding
     )
     return vectordb
 
 
 def initialize_llmchain(
-    llm_model, temperature, max_tokens: int, top_k, vector_db: Chroma, progress=gr.Progress()
+    llm_model,
+    temperature,
+    max_tokens: int,
+    top_k,
+    vector_db: Chroma,
+    progress=gr.Progress(),
 ) -> ConversationChain:
     progress(0.1, desc="Initializing HF tokenizer...")
 
